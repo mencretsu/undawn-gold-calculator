@@ -6,27 +6,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 </head>
 
 <body>
-    <br> <label for="rate">Rate:</label>
-    <input type="number" id="rate" step="0.01" min="0.01" placeholder="Contoh: 0.19"style="width: 100px;"><br><br>
+    <br> 
+    <label for="rate">Rate:</label>
+    <input type="number" id="rate" step="0.01" min="0.01" placeholder="Contoh: 0.19" style="width: 100px;">
+    <br><br>
 
     <label for="gold">Jumlah Gold:</label>
-    <input type="text" id="gold" oninput="formatInput(this)" placeholder="Contoh: 1.000.000"style="width: 300px;"><br>
+    <input type="text" id="gold" oninput="formatInput(this)" placeholder="Contoh: 1.000.000" style="width: 300px;">
+    <br>
     <input type="radio" id="bersih" name="slippage" value="Bersih">
     <label for="bersih">Bersih</label>
     <input type="radio" id="kotor" name="slippage" value="Kotor" checked>
-    <label for="kotor">Kotor</label><br><br>
+    <label for="kotor">Kotor</label>
+    <br><br>
 
     <label for="tax">Pajak/Tax:</label>
     <select id="tax">
         <option value="0.06">6%</option>
         <option value="0.08">8%</option>
         <option value="0.1">10%</option>
-    </select><br>
-    <br> <button onclick="calculateGold()">Hasilkan</button>
+    </select>
+    <br><br> 
+
+    <button onclick="calculateGold()">Hasilkan</button>
     <br><br>
     <p id="hasil"></p>
     <p id="hasilGold"></p>
@@ -34,8 +39,8 @@
     <script>
         function formatInput(input) {
             var val = input.value.replace(/\D/g, '');
-            val = val.replace(/\./g, ''); 
-            val = val.replace(/\B(?=(\d{3})+(?!\d))/g, "."); // 
+            val = val.replace(/\./g, '');
+            val = val.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
             input.value = val;
         }
 
@@ -54,8 +59,7 @@
 
             var hargaRate = formatNumber((rate * gold) / 1);
             var hargaPost = formatNumber(Math.round(gold / (1 - tax)));
-            var hargaPostNumber = parseFloat(hargaPost.replace(/\./g, ''));
-            var hargaBersih = formatNumber(gold - (hargaPostNumber - gold));
+            var hargaBersih = formatNumber(gold - (gold * tax));
 
             document.getElementById("hasil").innerHTML = "<strong>Harga sesuai Rate: </strong>Rp" + hargaRate;
             if (document.getElementById("bersih").checked) {
@@ -66,8 +70,8 @@
         }
     </script>
     <br><br>
-  <i>* Perhitungan diatas menggunakan formula: GOLD/(100-TAX%) dengan opsi nilai tax terkini.</i><br><br>
-
+    <p>* Perhitungan diatas menggunakan formula: GOLD - (GOLD * TAX%).</p>
+    <br><br>
 </body>
 
 </html>
